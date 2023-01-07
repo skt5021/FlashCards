@@ -7,21 +7,18 @@ phases:
       - aws --version
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 948731545609.dkr.ecr.us-west-2.amazonaws.com
       - REPOSITORY_URI=948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:latest .
-      - docker tag 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:latest 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:$IMAGE_TAG
+      - docker tag 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
       - docker push 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:latest
-      - docker push 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:$IMAGE_TAG
       - echo Writing image definitions file...
-      - printf '[{"name":"hello-world","imageUri":"%s"}]' 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"hello-world","imageUri":"%s"}]' 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:latest > imagedefinitions.json
 artifacts:
     files: imagedefinitions.json
