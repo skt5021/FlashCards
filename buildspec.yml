@@ -5,13 +5,13 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 948731545609.dkr.ecr.us-west-2.amazonaws.com
+      - aws ecr get-login-password --region us-west-2| docker login --username AWS --password-stdin 948731545609.dkr.ecr.us-west-2.amazonaws.com
       - REPOSITORY_URI=948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:latest .
+      - docker build -t flashcards .
       - docker tag 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:latest
   post_build:
     commands:
