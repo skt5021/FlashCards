@@ -13,7 +13,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:latest .
+      - docker build -t 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:latest .
       - docker tag 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:latest 948731545609.dkr.ecr.us-west-2.amazonaws.com/flashcards:$IMAGE_TAG
   post_build:
     commands:
